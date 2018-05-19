@@ -1,17 +1,18 @@
-# ZamatoFinder
+# My cool website
 
-Web app to find restaurants by location and display them using the Zamato API and Mapbox
+This file describes your project to the community. What's your cool website about? What makes it special?
 
+ヽ(๏∀๏ )ﾉ
 
-# DEMO: 
+## ← index.html
 
-https://zomato-mapbox.glitch.me
+Where you'll write the content of your website. 
 
-# Usage
+## ← styles.css
 
-Simply enter a location by name (textbox utilizes google autocorrect) and click the update button to update your 
-specifications. Details about each specification can be found at https://developers.zomato.com/documentation
+CSS files add styling rules to your content
 
-After selecting your options (leave box checked to include in search), click the submit button to generate a list of compatible restaurants. A list will appear at the bottom of the left tab and options will be displayed on the map to the right
+## ← script.js
 
-Contact if you have any questions or would like to request additional features.
+If you're feeling fancy you can add interactivity to your site with Javascript
+

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Display a map</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.js"></script>
+    <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.1/mapbox-gl.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:500" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-beta/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+  
+</head>
+
+<body>
+    <div class="row">
+        <div class="col s6 left" style="overflow-y: scroll; height: 602px;">
+            <div class="container" >
+                <h3 class="center-align">Zomato Finder</h3>
+                <form id="options">
+                    <div class="row form-content">
+                        <div class="col s12 m5" style="width: 100%;">
+                            <div class="card-panel z-depth-5">
+                                <div class="row">
+                                    <div class="col s8">
+                                        <div class="input-field inline" style="width: 100%;">
+                                            <input placeholder="" id="location" type="text" class="validate">
+                                            <label for="location">Enter a location...</label>
+                                          <a id="update" class="waves-effect waves-light btn" style="left: 37.5%;">Update</a>
+
+                                        </div>
+                                    </div>
+                                    <div class="col s1">
+                                        <div class="headerDivider"></div>
+                                    </div>
+                                    <div class="col s2">
+                                        <a class="btn btn-floating btn-large waves-effect waves-light blue tooltipped" id="selectPoint" data-position="bottom" data-tooltip="Click, then click again on the map to get a location" style="margin-top: 40%;margin-left: 10px;"><i class="material-icons">search</i></a>
+                                    </div>
+                                </div>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                  
+                    <div class="row">
+    <div class="col s6">
+      <div class="card-panel z-depth-5" style="height: 240px;">
+        <div>
+       <label>
+        <input name="forCategory" type="checkbox" class="filled-in" checked="checked" />
+        <span>Category</span>
+      </label>
+        
+       <div class="input-field col s12">
+         
+    <select id="category" multiple>
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Delivery</option>
+      <option value="2">Dine-out</option>
+      <option value="3">Nightlife</option>
+      <option value="4">Catching-up</option>
+      <option value="5">Takeaway</option>
+      <option value="6">Cafes</option>
+      <option value="7">Daily Menus</option>
+      <option value="8">Breakfast</option>
+      <option value="9">Lunch</option>
+      <option value="10">Dinner</option>
+      <option value="11">Pubs & Bars</option>
+       <option value="12">Pocket Friendly Delivery</option>
+       <option value="13">Clubs & Lounges</option>     
+      
+    </select>
+  
+  </div>
+        </div>
+        <div>
+          <label>
+        <input name="forCuisines" type="checkbox" class="filled-in" checked="checked" vale="true"/>
+        <span>Cuisine</span>
+      </label>
+        
+       <div class="input-field col s12">
+    <select id="cuisines" multiple>
+      
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+  
+  </div>
+      </div>
+    </div>
+                      </div>
+                            <div class="col s6">
+      <div class="card-panel z-depth-5" style="height: 240px;">
+        <div>
+       <label>
+        <input name="forCollections" type="checkbox" class="filled-in" checked="checked" />
+        <span>Collection</span>
+      </label>
+        
+       <div class="input-field col s12">
+         
+    <select id="collections">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+  
+  </div>
+        </div>
+        <div>
+          <label>
+        <input name="forEstablishments" type="checkbox" class="filled-in" checked="checked" />
+        <span>Establishment</span>
+      </label>
+        
+       <div class="input-field col s12">
+    <select id="establishments">
+      <option value="" disabled selected>Choose your option</option>
+      <option value="1">Option 1</option>
+      <option value="2">Option 2</option>
+      <option value="3">Option 3</option>
+    </select>
+  
+  </div>
+      </div>
+    </div>
+                      </div>
+  </div>
+                  
+                   <div class="row" >
+    <div class="col s12 m5" style="width: 100%;">
+      <div class="card-panel">
+        <div > Radius: <p id="output" style="display: inline">50</p></div>
+          
+            <input type="range"  min="0" max="10000" value="50" name="radius" id="radius" />
+          
+        
+      </div>
+    </div>
+  </div>
+                   <div class="row">
+    
+      <div class="row">
+         
+        <div class="input-field col s12" style="width: 100%">
+           <div class="card-panel">
+             <label for="textarea1">Search with keywords</label>
+          <textarea name="query" id="query" class="materialize-textarea"></textarea>
+          
+        </div>
+        </div>
+      </div>
+  
+  </div>
+<a class="waves-effect waves-light btn  black submit" style="width: 100%">Submit</a>         
+                </form>
+<hr style="width: 100%; margin-top: 7%; background-color: black; height: 2px; border: black;">            
+          
+  <div class="row">
+    
+      <table>
+        <thead>
+          <tr>
+              <th>Number</th>
+              <th>Name</th>
+              <th>Address</th>
+          </tr>
+        </thead>
+
+        <tbody class="tbody">
+          
+        </tbody>
+      </table>
+  </div>
+              
+
+          </div>
+        </div>
+        <div class="col s6">
+            <div id="map"></div>
+        </div>
+
+    </div>
+   
+
+    <script>
+     
+        function initMap() {
+          window.google = google;
+            var elem = document.querySelector('#location');
+           var autocomplete = new google.maps.places.Autocomplete(elem);
+          window.autocomplete = autocomplete;
+        }
+   
+
+        function searchRes(e) {
+            e.preventDefault();
+            console.log("test")
+        }
+    </script>
+    
+   <script async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5mofk3s_28azZg8wu_43R_D2oK32JxVk&callback=initMap&libraries=places">   
+    </script>
+  <script src="./script.js">
+    </script>
+</body>
+
+</html>
