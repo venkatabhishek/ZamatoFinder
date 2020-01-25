@@ -24,8 +24,12 @@ def geocoder():
         'format': 'json'
     }
 
-    response = requests.get(url, params=data)
-    return jsonify(response.json()[:3])
+    try:
+        response = requests.get(url, params=data)
+        d = response.json()
+        return jsonify(d[:3])
+    except Exception:
+        return jsonify([])
 
 
 @app.route('/options', methods=['GET'])
@@ -54,14 +58,12 @@ def cuisines(lat, lon):
         "lon": lon
     }
 
-    print(params)
-
     headers = {
         "user-key": ZAMATO_KEY
     }
 
     response = requests.get(url, params=params, headers=headers)
-    return response.json()['cuisines']
+    return response.json().get('cuisines', [])
 
 
 def establishments(lat, lon):
@@ -73,14 +75,12 @@ def establishments(lat, lon):
         "lon": lon
     }
 
-    print(params)
-
     headers = {
         "user-key": ZAMATO_KEY
     }
 
     response = requests.get(url, params=params, headers=headers)
-    return response.json()['establishments']
+    return response.json().get('establishments', [])
 
 
 def collections(lat, lon):
@@ -92,14 +92,24 @@ def collections(lat, lon):
         "lon": lon
     }
 
-    print(params)
-
     headers = {
         "user-key": ZAMATO_KEY
     }
 
     response = requests.get(url, params=params, headers=headers)
-    return response.json()['collections']
+    return response.json().get('collections', [])
+
+
+@app.route('/search', methods=['GET'])
+def search():
+    url = ZAMATO + "/search"
+
+    headers = {
+        "user-key": ZAMATO_KEY
+    }
+
+    response = requests.get(url, params=request.args, headers=headers)
+    return jsonify(response.json())
 
 
 if __name__ == '__main__':
